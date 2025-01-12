@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remoxa-deployment
+  labels:
+    app: remoxa
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: remoxa
+  template:
+    metadata:
+      labels:
+        app: remoxa
+    spec:
+      containers:
+      - name: remoxa-container
+        image: smit1129/remoxa:latest
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1"
+          limits:
+            memory: "4Gi"
+            cpu: "2"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 10

@@ -1,0 +1,5 @@
+numpy
+Flask
+torch
+torchvision
+Pillow
